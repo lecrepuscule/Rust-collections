@@ -1,4 +1,5 @@
 use std::cmp::Ordering;
+use std::collections::HashMap;
 
 pub fn get_mean(list: &Vec<f32>) -> Vec<f32> {
 	let mut sum: f32 = 0.0;
@@ -20,8 +21,6 @@ pub fn get_median(list: &Vec<f32>) -> f32 {
 	v.sort();
 	let sorted_list: Vec<f32> = v.iter().map(|v| v.0).collect();
 
-
-
 	if list.len() % 2 == 0 {
 		let middle_index = list.len() / 2 ;
 		(sorted_list[middle_index] + sorted_list[middle_index - 1]) / 2.0
@@ -30,6 +29,24 @@ pub fn get_median(list: &Vec<f32>) -> f32 {
 		sorted_list[middle_index]
 	}
 
+}
+
+pub fn get_mode(list: &Vec<i32>) -> Option<i32> {
+	let mut map: HashMap<i32, u32> = HashMap::new();
+	let mut max_count = 0;
+	let mut mode: Option<i32> = None;
+
+	for v in list {
+		let count = map.entry(*v).or_insert(0);
+		*count += 1;
+	}
+	for (k, v) in map {
+		if v > max_count {
+			max_count = v;
+			mode = Some(k);
+		}
+	}
+	mode
 }
 
 #[derive(PartialEq,PartialOrd)]
