@@ -5,13 +5,15 @@ pub fn pig_latin(input_string: &String) -> String {
 
 	for (i, c) in input_string.chars().enumerate() {
 		if i == 0 {
-			let is_vowel = vowels.iter().position(|&s| s == c);
-			if is_vowel.is_none() {
-				pig_latin_suffix.push_str(&c.to_string());
-				pig_latin_suffix.push_str("ay");
-				continue;
-			} else {
-				pig_latin_suffix.push_str("hay");
+			match vowels.iter().position(|&s| s == c) {
+				None => {
+					pig_latin_suffix.push_str(&c.to_string());
+					pig_latin_suffix.push_str("ay");
+					continue;
+				},
+				_ => {
+					pig_latin_suffix.push_str("hay");
+				}
 			}
 		}
 		pig_latin_string.push(c);
